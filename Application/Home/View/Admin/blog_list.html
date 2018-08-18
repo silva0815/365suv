@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="COMMON_RES/css/bootstrap-v2.3.2.min.css" rel="stylesheet" />
+    <link href="/Public/admin/css/common.css" rel="stylesheet" />
+    <link href="/Public/admin/css/blog_list.css" rel="stylesheet" />
+    <link href="/Public/admin/css/my_page.css" rel="stylesheet" />
+    <link href="COMMON_RES/plugin/layer/skin/default/layer.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid" style="height: 100%">
+        <div class="row-fluid">
+            <h4>文章列表</h4>
+            <!--<div class="add"><a class="btn btn-danger" href="__URL__/news_add">新增</a></div>-->
+            <div class="w">
+                <div class="span12">
+                    <table class="table table-condensed table-bordered table-hover tab">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%">序号</th>
+                                <th style="width: 25%">标题</th>
+                                <th style="width: 10%">作者</th>
+                                <th style="width: 8%">文章类型</th>
+                                <th style="width: 8%">阅读次数</th>
+                                <th style="width: 8%">评论次数</th>
+                                <th style="width: 8%">显示状态</th>
+                                <th style="width: 10%">发布时间</th>
+                                <th style="width: 10%">更新时间</th>
+                                <th style="width: 8%">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                        <volist name="blog_list" id="v" key="k">
+                        <tr>
+                            <td>{$k+($nowPage-1)*$listRows}</td>
+                            <td class="tt" style="text-align: left!important;padding-left: 10px!important;"><a href="/read/{$v.id}.html" target="_blank">{$v.title}</a></td>
+                            <td>{$v.username}</td>
+                            <td>{$v.type}</td>
+                            <td>{$v.read_count}</td>
+                            <td>{$v.comment_count}</td>
+                            <td>
+                                <eq name="v.status" value="1">
+                                    <img src="/Public/admin/image/32/488.png" style="width:20px">
+                                    <else/>
+                                    <img src="/Public/admin/image/32/489.png" style="width:20px">
+                                </eq>
+                            </td>
+                            <td>{$v['publish_at']}</td>
+                            <td>{$v['edit_at']}</td>
+                            <td>
+                                <eq name="v.status" value="1">
+                                    <a class="btn btn-default btn-small change_status" href="__URL__/change_blog_status?id={$v.id}&status=0" title="隐藏">隐藏</a>
+                                    <else/>
+                                    <a class="btn btn-success btn-small change_status" href="__URL__/change_blog_status?id={$v.id}&status=1" title="显示">显示</a>
+                                </eq>
+                            </td>
+                        </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                    <div class="page_num">
+                        <div class="pages">
+                            {$page}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="COMMON_RES/js/jquery-v1.9.1.js"></script>
+    <script src="COMMON_RES/js/bootstrap-v2.3.2.min.js"></script>
+    <script src="/Public/admin/js/info.js"></script>
+    <script src="COMMON_RES/plugin/layer/layer.js"></script>
+    <script>
+        $(function(){
+            $(".change_status").on("click",function(){
+                var $this=$(this);
+                layer.msg('你确定修改么？', {
+                    time: 0 ,//不自动关闭
+                    btn: ['确定', '取消'],
+                    yes: function(index){
+                        layer.close(index);
+                        window.location.href=$this.prop("href");
+                    }
+                });
+                return false;
+            })
+        })
+    </script>
+</body>
+</html>

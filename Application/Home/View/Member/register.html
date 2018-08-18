@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>注册-越行越野</title>
+    <link rel="stylesheet" href="HOME_RES/css/member/login.css" />
+<body>
+
+<div class="register-container">
+    <h1>注册-<a href="/">越行越野</a></h1>
+
+    <div class="connect">
+        <p><a href="/">www.365suv.com</a></p>
+    </div>
+
+    <form action="" method="post" id="registerForm">
+        <div>
+            <input type="text" name="username" class="username" placeholder="您的用户名" />
+        </div>
+        <div>
+            <input type="password" name="password" class="password" placeholder="输入密码" oncontextmenu="return false" onpaste="return false" />
+        </div>
+        <div>
+            <input type="password" name="confirm_password" class="confirm_password" placeholder="再次输入密码" oncontextmenu="return false" onpaste="return false" />
+        </div>
+        <div>
+            <input type="text" name="mobile" class="mobile" placeholder="输入手机号码"  id="number"/>
+        </div>
+        <div>
+            <input type="text" name="email" class="email" placeholder="输入邮箱地址" oncontextmenu="return false" onpaste="return false" />
+        </div>
+        <div style="position: relative;overflow:hidden;zoom:1">
+            <input type="text" name="vcode"  class="vcode" placeholder="验证码" oncontextmenu="return false" onpaste="return false" autocomplete="off" style="width: 150px;float: left;clear:both"/>
+            <img id="imagecode" src="COMMON_RES/plugin/vcode/create_vcode.php" style="position:absolute;right:0;top:27px;border-radius: 3px" onclick="this.src='COMMON_RES/plugin/vcode/create_vcode.php?'+Math.random()">
+        </div>
+        <button id="submit" type="submit">注 册</button>
+    </form>
+    <a href="/login.html">
+        <button type="button" class="register-tis">已经有账号？</button>
+    </a>
+
+</div>
+
+
+<script src="HOME_RES/js/member/jquery.min.js"></script>
+<script src="HOME_RES/js/member/common.js"></script>
+<!--背景图片自动更换-->
+<script src="HOME_RES/js/member/supersized.3.2.7.min.js"></script>
+<script src="HOME_RES/js/member/supersized-init.js"></script>
+<!--表单验证-->
+<script src="HOME_RES/js/member/jquery.validate.min.js?var1.14.0"></script>
+<script>
+    $(function(){
+        $("#imagecode").click();
+    })
+</script>
+</body>
+</html>

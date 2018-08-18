@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>越行越野--个人中心</title>
+    <link rel="shortcut icon" href="COMMON_RES/img/yxyy7.png">
+    <link rel="stylesheet" href="HOME_RES/css/news/news.css">
+    <link rel="stylesheet" href="COMMON_RES/css/my_btn.css">
+    <link rel="stylesheet" href="COMMON_RES/css/my_fenye.css">
+    <link rel="stylesheet" href="COMMON_RES/plugin/nav/css/lanren.css">
+    <script src="COMMON_RES/js/jquery-v1.9.1.js"></script>
+</head>
+<body>
+<a id="top"></a>
+<div class="blog">
+    <include file="Public:header" />
+    <div style="width: 100%;border:  1px solid #e9e9e9">
+        <div style="width: 100%;float: right;border-left: 1px solid #e9e9e9;border-bottom: 1px solid #e9e9e9;">
+            <div style="width: 100%;height:40px;background-color: #87CEFA;margin-bottom: 10px;line-height: 40px">
+                <span style="margin-left: 20px;color: white;font-family: 微软雅黑;font-weight: bold">热门新闻</span>
+            </div>
+            <div id="blogPlus">
+                <volist name="data" id="var">
+                    <div style="width: 100%">
+                        <div style="width: 90%;height: 30px;line-height:30px;border-bottom: 1px dashed dimgrey;margin-left: 40px;margin-bottom:10px">
+                            <img src="/Public/common/img/black_dot.png" style="margin-left: 15px;width: 5px;height: 5px;margin-bottom: 2px"><a class="aa" href="{$var.url}" target="_blank" style="font-size: 18px">  {$var.title}</a>
+                    <span style="float: right;font-size: 14px;color:dimgrey;margin-right: 40px">  {$var.create_at}
+                    </span>
+                        </div>
+                    </div>
+                </volist>
+                <div class="pages">{$page}</div>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <include file="Public:footer" />
+</div>
+</body>
+</html>

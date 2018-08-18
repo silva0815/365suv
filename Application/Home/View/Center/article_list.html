@@ -1,0 +1,44 @@
+<foreach name="data" item="var">
+    <div style="width: 100%">
+        <div style="width: 90%;height: 30px;line-height:30px;border-bottom: 1px dashed dimgrey;margin: auto">
+            <a class="aa" href="/read/{$var.blog_id}.html" target="_blank">{$var.title}</a>
+                    <span style="float: right">
+                    <a class="btn btn-primary btn-xs" href="/edit/{$var.blog_id}.html">修改</a>
+                    <a class="btn btn-danger btn-xs delete" href="javascript:;" blog_id="{$var.blog_id}">删除</a>
+                    </span>
+        </div>
+        <div style="font-size: 12px;color:dimgrey;width: 90%;height:20px;line-height:20px;margin: auto">
+            发布时间:{:date("Y-m-d H:i:s",$var['publish_at'])}&nbsp;
+            更新时间:{:date("Y-m-d H:i:s",$var['edit_at'])}&nbsp;
+            阅读次数（{$var.read_count}）&nbsp;
+            评论次数（{$var.comment_count}）
+        </div>
+    </div>
+</foreach>
+<div class="pages">{$page}</div>
+<script>
+    $('.pages a').on('click',function(){
+        var $this=$(this);
+            $.ajax({
+                url:$this.attr('href'),
+                'success':function(data){
+                    $('#blogPlus').html(data);
+                }
+            });
+            return false;
+    });
+
+    $(".delete").on('click',function(){
+        var $this=$(this);
+        var blog_id=$this.attr('blog_id');
+        layer.confirm('你确定要删除吗？',{title:'删除提示'}, function(index){
+            $.post('__URL__/article_delete',{'bid':blog_id},function(resp){
+                if (parseInt(resp)) {
+                    loadArticleList();
+                    $('#publishCount').html(parseInt($('#publishCount').html())-1);
+                    layer.close(index);
+                }
+            });
+        });
+    });
+</script>

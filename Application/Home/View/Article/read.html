@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>{$data1.title}_越行越野</title>
+    <link rel="shortcut icon" href="COMMON_RES/img/yxyy7.png">
+    <link rel="stylesheet" href="COMMON_RES/css/my_btn.css">
+    <link rel="stylesheet" href="COMMON_RES/plugin/nav/css/lanren.css">
+    <link rel="stylesheet" href="COMMON_RES/plugin/layer/skin/default/layer.css">
+    <link rel="stylesheet" href="HOME_RES/css/article/sinaFaceAndEffec.css">
+    <link rel="stylesheet" href="HOME_RES/css/article/read.css">
+    <script src="COMMON_RES/js/jquery-v1.9.1.js"></script>
+</head>
+<body>
+<div class="blog">
+    <include file="Public:header" />
+    <div style="width: 100%;border: 1px solid #e9e9e9;margin-bottom: 10px">
+        <div style="width: 25%;float:left">
+            <div style="width: 60%;height: 30px;margin-top: 10px;margin-left: 10px">作者：</div>
+            <div style="width: 119px;height: 119px;border: 1px solid #e0e0e0; margin: 30px auto 30px auto">
+                <neq name="data1.photo" value="">
+                    <img src="{$data1.photo}" style="width: 100%;height: 100%">
+                    <else/>
+                    <img src="/Public/Blog/photo/male.png" style="width: 100%;height: 100%">
+                </neq>
+            </div>
+            <div style="width:100%;text-align: center;font-family: 微软雅黑;color: #4876FF;font-weight: bold">
+                {$data1.author}
+            </div>
+        </div>
+        <div style="float:right;width: 74%;border-left:1px solid #e9e9e9">
+            <h2 style="text-align: center;margin: 20px auto">{$data1.title}</h2>
+            <div style="width: 90%;margin: auto;text-align: center">
+                <span style="font-size: 12px">
+                    发布时间：{:date("Y-m-d H:i:s",$data1['publish_at'])} |
+                    阅读次数：{$data1.read_count} |
+                    评论次数：<span id="commentCount">{$data1.comment_count}</span> |
+                    文章来源：{:$data1['refer'] ? $data1['refer']  : "越行越野" }
+                </span>
+            </div>
+            <div style="width: 90%;word-wrap:break-word;border-top: 2px solid #0a4e8a;margin:10px auto 16px auto;padding-top:15px">
+                {:htmlspecialchars_decode($data1['bcontent'])}
+            </div>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <div id="comment_list" style="width: 100%;height:40px;background-color: #87CEFA;margin-bottom: 10px;line-height: 40px">
+        <span style="margin-left: 20px;color: white;font-family: 微软雅黑;font-weight: bold">评论
+            <empty name="user">
+               <span id="aa1" style="float: right;margin-right: 10px">
+                   <span style="color: red">登录后才能发表评论！</span>
+                   [<a style="color: #fff;font-weight: normal" href="/login.html"> 登录 </a>]
+               </span>
+            </empty>
+        </span>
+    </div>
+    <notempty name="user">
+    <div class="ccontent">
+        <div class="cont-box">
+            <textarea class="text" placeholder="请输入..."></textarea>
+        </div>
+        <div class="tools-box">
+            <div class="operator-box-btn">
+                <span class="face-icon"  >☺</span>
+            </div>
+            <div class="submit-btn">
+                <input type="button"  value="提交评论" />
+            </div>
+        </div>
+    </div>
+    </notempty>
+    <div style="clear: both"></div>
+    <div id="commentPlus"></div>
+    <include file="Public:footer" />
+    <div style="width: 150px;position: fixed;right:0;bottom:100px">
+        <ul style="text-align: center">
+            <li  style="margin-bottom:5px">
+                <a href="#top" ><img src="COMMON_RES/img/dingbu.png" style="width: 50px;height: 50px"></a>
+            </li>
+            <li  style="margin-bottom:5px">
+                <a href="#comment_list"><img src="COMMON_RES/img/pinglunList.png" style="width: 50px;height: 50px"></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script  src="HOME_RES/js/article/main.js"></script>
+<script  src="HOME_RES/js/article/sinaFaceAndEffec.js"></script>
+<script src="COMMON_RES/plugin/layer/layer.js"></script>
+<script>
+    $(function(){
+
+        // 绑定表情
+        $('.face-icon').SinaEmotion($('.text'));
+
+
+        var loadCommentList=function (){
+            $.ajax({
+                type:'post',
+                url:'__URL__/comment_list',
+                data:{
+                    'blog_id':{$blog_id}
+                },
+                'success': function (data){
+                    $('#commentPlus').html(data);
+                }
+            });
+        };
+        loadCommentList();
+
+        $('.submit-btn').on('click',function(){
+            var cont= $.trim($('.cont-box .text').val());
+           if(cont){
+               cont=AnalyticEmotion(cont);
+               var loader = layer.load(0,{
+                   shade:0.3
+               });
+               $.ajax({
+                   type:'post',
+                   url: "__URL__/comment_save",
+                   data: {
+                       blog_id:{$blog_id},
+                       'ccontent':cont
+                   },
+                   'success': function (data){
+                       if (parseInt(data)){
+                           $('.cont-box .text').val('');
+                           loadCommentList();
+                           $('#commentCount').text(parseInt($('#commentCount').text())+1);
+                           layer.close(loader);
+                           layer.msg('提交成功')
+                       } else {
+                           layer.close(loader);
+                           layer.msg('提交失败')
+                       }
+                   }
+
+               })
+           }
+        });
+
+    })
+</script>
+<script>
+    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2",
+    "bdMiniList":["qzone","tsina","weixin","tqq","renren","sqq","kaixin001","tqf","tieba","douban","youdao","sdo","isohu","ty","fbook","twi"],
+    "bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"0","bdPos":"left","bdTop":"350"}};
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+</body>
+</html>

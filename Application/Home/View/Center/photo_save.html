@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="COMMON_RES/css/my_prompt.css">
+    <link rel="stylesheet" href="HOME_RES/css/photo_save.css">
+</head>
+<body>
+<if condition="$tip eq '上传成功！'">
+    <div  class="zzc alert alert-success" >
+        <span class="Info">{$tip}</span>
+    </div>
+<else/>
+    <div  class="zzc alert alert-danger" >
+        <span class="Info">{$tip}</span>
+    </div>
+</if>
+</body>
+</html>

@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="COMMON_RES/css/bootstrap-v2.3.2.min.css" rel="stylesheet" />
+    <link href="/Public/admin/css/common.css" rel="stylesheet" />
+    <link href="/Public/admin/css/blogroll_list.css" rel="stylesheet" />
+    <link href="/Public/admin/css/my_page.css" rel="stylesheet" />
+    <link rel="stylesheet" href="COMMON_RES/plugin/layer/skin/default/layer.css">
+    <script src="COMMON_RES/js/jquery-v1.9.1.js"></script>
+    <script src="COMMON_RES/js/bootstrap-v2.3.2.min.js"></script>
+    <script src="/Public/admin/js/info.js"></script>
+    <script src="COMMON_RES/plugin/layer/layer.js"></script>
+    <script>
+        $(function(){
+            $(".change_status").on("click",function(){
+                var $this=$(this);
+                layer.msg('你确定修改么？', {
+                    time: 0 ,//不自动关闭
+                    btn: ['确定', '取消'],
+                    yes: function(index){
+                        layer.close(index);
+                        window.location.href=$this.prop("href");
+                    }
+                });
+                return false;
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class="container-fluid" style="height: 100%">
+        <div class="row-fluid">
+            <h4>图片列表</h4>
+            <div class="add"><a class="btn btn-success" href="__URL__/blogroll_add">新增</a></div>
+            <div class="w">
+                <div class="span12">
+                    <table class="table table-condensed table-bordered table-hover tab">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%">序号</th>
+                                <th style="width: 20%">友链图标</th>
+                                <th style="width: 15%">友链名称</th>
+                                <th style="width: 15%">友链地址</th>
+                                <th style="width: 10%">权重值</th>
+                                <th style="width: 10%">使用状态</th>
+                                <th style="width: 15%">添加时间</th>
+                                <th style="width: 10%">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                        <volist name="blogroll_list" id="v" key="k">
+                        <tr>
+                            <td>{$k+($nowPage-1)*$listRows}</td>
+                            <td><img src="{$v.image_path}" style="width: 100px;height:33px;border: 1px solid #dcdcdc"></td>
+                            <td>{$v.title}</td>
+                            <td style="word-break: break-all">{$v.url}</td>
+                            <td>{$v.sort}</td>
+                            <td>
+                                <eq name="v.status" value="1">
+                                    <img src="/Public/admin/image/32/488.png" style="width:20px">
+                                    <else/>
+                                    <img src="/Public/admin/image/32/489.png" style="width:20px">
+                                </eq>
+                            </td>
+                            <td>{$v.create_at}</td>
+                            <td>
+                                <a class="btn btn-info btn-mini" href="__URL__/blogroll_edit?id={$v.id}" title="修改">修改</a>
+                                <eq name="v.status" value="1">
+                                    <a class="btn btn-default btn-mini change_status" href="__URL__/change_br_status?id={$v.id}&status=0" title="停用">停用</a>
+                                    <else/>
+                                    <a class="btn btn-success btn-mini change_status" href="__URL__/change_br_status?id={$v.id}&status=1" title="启用">启用</a>
+                                </eq>
+                            </td>
+                        </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                    <div class="page_num">
+                        <div class="pages">
+                            {$page}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

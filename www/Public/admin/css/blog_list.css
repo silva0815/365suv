@@ -1,0 +1,39 @@
+﻿td, th {
+    text-align: center !important;
+}
+
+.tab thead {
+    background-image: url(/Public/admin/image/left-title-bg-h.png);
+    /*background-color: #50A8E6;*/
+}
+
+thead th {
+    height: 30px;
+    color: white;
+    line-height: 30px !important;
+}
+
+.add {
+    margin: 10px 0;
+}
+.page_num{
+    width: 500px;
+    height: 27px;
+    margin:30px auto;
+}
+
+.tt>a{
+    color:#000!important;
+}
+.tt>a:hover{
+    color:#50A8E6!important;
+    text-decoration: underline;
+}
+.layui-layer-btn .layui-layer-btn0{
+    border-color:#50A8E6!important;
+    background-color:#50A8E6!important;
+    color:#fff
+}
+tr,td{
+    vertical-align: middle!important;
+}

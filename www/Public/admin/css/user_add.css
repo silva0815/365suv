@@ -1,0 +1,39 @@
+﻿/*td, th {*/
+    /*text-align: center !important;*/
+/*}*/
+
+/*.tab thead {*/
+    /*/!*background-image: url(/Public/img/admin/left-title-bg-h.png);*!/*/
+    /*background-color: #D83918;*/
+/*}*/
+
+/*thead th {*/
+    /*height: 30px;*/
+    /*color: white;*/
+    /*line-height: 30px !important;*/
+/*}*/
+
+/*.add {*/
+    /*margin: 10px 0;*/
+/*}*/
+.contain{
+    width: 800px;
+    height: 1000px;
+    margin:80px auto auto auto;
+}
+form{
+    margin-left: 20px;margin-top: 50px
+}
+
+.username{
+    width: 80px;
+    display: inline-block
+}
+.mk{
+    height: 50px
+}
+.layui-layer-btn .layui-layer-btn0{
+    border-color:#D83918!important;
+    background-color:#D83918!important;
+    color:#fff
+}

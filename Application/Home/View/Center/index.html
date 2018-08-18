@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>越行越野--个人中心</title>
+    <link rel="shortcut icon" href="COMMON_RES/img/yxyy7.png">
+    <link rel="stylesheet" href="HOME_RES/css/center/index.css">
+    <link rel="stylesheet" href="COMMON_RES/css/my_btn.css">
+    <link rel="stylesheet" href="COMMON_RES/css/my_fenye.css">
+    <link rel="stylesheet" href="COMMON_RES/plugin/nav/css/lanren.css">
+    <link rel="stylesheet" href="COMMON_RES/plugin/layer/skin/default/layer.css">
+    <script src="COMMON_RES/js/jquery-v1.9.1.js"></script>
+</head>
+<body>
+<div class="blog">
+    <include file="Public:header" />
+    <div style="width: 100%;border:  1px solid #e9e9e9">
+        <div style="width: 270px;float: left;position: relative">
+            <div id="frame" style="">
+                <neq name="data2.photo" value="">
+                    <img src="{$data2.photo}" style="width: 100%;height: 100%">
+                    <else/>
+                    <img src="Uploads/photo/male.png" style="width: 90%;height: 90%;padding: 5%">
+                </neq>
+            </div>
+            <br>
+
+            <form id="uploadForm" action="__URL__/photo_save" method="post" target="iframe1"
+                  enctype="multipart/form-data">
+                <div style="width:100%;height: 150px;text-align: center">
+
+                    <a style="margin: auto" class="btn_addPic" href="javascript:void(0);">
+                        <span><em>+</em>更换头像</span>
+                        <input class="filePrew" title="支持jpg、jpeg、gif、png格式，文件小于200k" tabIndex="3" type="file" size="3"
+                               name="photo">
+                    </a>
+
+                    <div id="divSubmit" style="width:100%;padding: 10px;margin-left: -10px;display: none">
+                        <input id="photoSubmit" class="btn btn-default" type="submit" value="上传">
+                    </div>
+
+                </div>
+                <iframe id="infoIframe" name="iframe1"
+                        style="width: 170px;height: 80px;position: absolute;left: 50px;top:20px"></iframe>
+            </form>
+            <div style="width: 90%;margin: auto;text-align: left;font-size: 14px">
+                用户名：{$user.username}<br><br>
+                联系方式：{$data2.mobile}<br><br>
+                邮箱：{$data2.email}<br><br>
+                注册时间：{:date("Y-m-d H:i:s",$data2['create_at'])}<br><br>
+                最近登录时间：{:date("Y-m-d H:i:s",$data2['login_at'])}<br><br>
+                登录次数：{$data2.login_count}<br><br>
+                已发贴数：<span id="publishCount">{$count1}</span><br><br>
+                评论次数：{$count2}<br><br>
+            </div>
+            <div style="width: 120px;height: 150px;line-height:20px;margin: auto">
+                <a style="float: left;margin-top: 30px" class="btn btn-primary btn-lg" href="/publish.html">我要发布 >> </a>
+            </div>
+        </div>
+        <div style="width: 750px;float: right;border-left: 1px solid #e9e9e9;border-bottom: 1px solid #e9e9e9;">
+            <div style="width: 100%;height:40px;background-color: #87CEFA;margin-bottom: 10px;line-height: 40px">
+                <span style="margin-left: 20px;color: white;font-family: 微软雅黑;font-weight: bold">我的发布</span>
+            </div>
+            <div id="blogPlus"></div>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <include file="Public:footer" />
+</div>
+<script src="COMMON_RES/plugin/layer/layer.js"></script>
+<script>
+    $(function(){
+        loadArticleList();
+        $('.filePrew').change(function(){
+            if($('.filePrew').val()!=""){
+                $('#divSubmit:hidden').show();
+
+            }
+        });
+
+        var photoAddress;
+        $('.btn_addPic').click(function(){
+            $.ajax({
+                url:'__URL__/photoSubmitCheck',
+                'success': function (data) {
+                    photoAddress=data;
+                }
+            })
+        });
+        $('#photoSubmit').click(function(){
+            $('#infoIframe:hidden').show();
+
+            setTimeout(function(){
+                $('#infoIframe').contents().find('div').remove();
+                $('#infoIframe:visible').hide();
+                $('#divSubmit:visible').hide();
+                $('.filePrew').val('');
+                $.ajax({
+                    url:'__URL__/photoSubmitCheck',
+                    'success': function (data) {
+                        if(data!=photoAddress){
+                            $('#frame').html("<img src="+data+" style='width: 100%;height: 100%'>")
+                        }
+                    }
+                })
+            },2000);
+        })
+    });
+    var loadArticleList=function(){
+        $.ajax({
+            type:'post',
+            url:'__URL__/article_list',
+            'success': function (data) {
+                $('#blogPlus').html(data);
+            }
+        });
+    };
+</script>
+</body>
+</html>

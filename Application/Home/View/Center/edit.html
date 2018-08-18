@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>越行越野--我要发帖</title>
+    <link rel="shortcut icon" href="COMMON_RES/img/yxyy7.png">
+    <link rel="stylesheet" href="COMMON_RES/css/bootstrap-v3.3.7.min.css">
+    <link rel="stylesheet" href="COMMON_RES/css/my_btn.css">
+    <link rel="stylesheet" href="COMMON_RES/css/icon.css">
+    <link rel="stylesheet" href="HOME_RES/css/center/publish.css">
+    <link rel="stylesheet" href="COMMON_RES/plugin/layer/skin/default/layer.css">
+
+</head>
+<body>
+<div class="container">
+    <h1>文章发布</h1>
+    <form method="post" action="" id="form1">
+        <div class="title">
+            <span style="">标题：</span>
+            <input type="text" name="title"  style="" maxlength="40" value="{$data.title}">
+            <span id="title_tip"><span>*</span>标题不能超过40个字</span>
+        </div>
+        <div class="title">
+            <span style="">类型：</span>
+            <select id="type" name='type' style="">
+                <option value="" >请选择内容类型</option>
+                <volist name="article_type" id="v">
+                    <option value="{$key}" <eq name="data.type" value="$key"> selected="selected"</eq>>{$v}</option>
+                </volist>
+            </select>
+        </div>
+        <div class="title">
+            <span style="">来源：</span>
+            <input type="text" name="refer" id="refer" value="{$data.refer}">
+        </div>
+        <div class="content">
+            <!--<span style="">正 文</span>-->
+            <div style="z-index: 2">
+                <textarea id="editor" type="text/plain" style="width:681px;height:500px">{:htmlspecialchars_decode($data['bcontent'])}</textarea>
+            </div>
+        </div>
+        <div class="submit_btn" >
+            <button type="submit" class="btn btn-primary btn-lg" style="margin-right: 20px"><span class="icon-check"></span> 提交</button>
+            <button type="button" class="btn btn-primary btn-lg" onclick="history.back()"><span class="icon-undo"></span> 返回</button>
+        </div>
+    </form>
+</div>
+<div style="width:100px;position:fixed;right: 0;top: 0">
+    <a href="/" style="font-size: 16px;font-weight: bold;">[返回首页]</a>
+</div>
+<script src="COMMON_RES/js/jquery-v1.9.1.js"></script>
+<script type="text/javascript" charset="utf-8" src="COMMON_RES/plugin/UEditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="COMMON_RES/plugin/UEditor/ueditor.all.js"></script>
+<script src="COMMON_RES/plugin/layer/layer.js"></script>
+<script >
+    var ue = UE.getEditor('editor', {
+        toolbars: [
+            ['fontfamily', 'fontsize', 'undo', 'redo', 'bold', 'italic', 'underline', 'strikethrough', 'preview',
+                'link', 'unlink', 'simpleupload', 'insertimage', 'indent', 'snapscreen', 'justifyleft', 'justifyright',
+                'justifycenter', 'justifyjustify', 'forecolor', 'imageleft', 'imageright', 'imagecenter', 'lineheight',
+                'touppercase', 'tolowercase'
+            ]
+        ],
+        iframeCssUrl: '/Public/common/plugin/UEditor/themes/iframe.css',// 引入css
+        initialFrameHeight: 500,
+        initialFrameWidth: 681,
+        elementPathEnabled:false,
+        wordCount:false,
+        enableAutoSave:false
+    });
+
+</script>
+<script>
+    $(function(){
+        $('#form1').on('submit',function(){
+            var title_inp= $.trim($("input[name=title]").val());
+            var type_inp= $("#type").val();
+            var refer_inp= $.trim($("input[name=refer]").val());
+            var content_inp= $.trim(ue.getContent());
+            if(title_inp==''){
+                layer.msg('请填写标题！',{anim: 6});
+            }else if(title_inp.length>40){
+                layer.msg('标题不能超过40个字！',{anim: 6});
+            }else if(type_inp==''){
+                layer.msg('请选择文章类型！',{anim: 6});
+            }else if(content_inp==''){
+                layer.msg('文章内容不能为空！',{anim: 6});
+            }else{
+                var loader=layer.load();
+                var url="";
+                var da={
+                    'id': {$blog_id},
+                    'title': title_inp,
+                    'type':type_inp,
+                    'refer': refer_inp,
+                    'bcontent': content_inp
+                };
+                $.post(url,da,function(resp){
+                    if(parseInt(resp)){
+                        layer.close(loader);
+                        layer.msg('修改成功！',{anim: 0},function(){
+                            window.location.href="/user/{$user.username}";
+                        });
+                    }else{
+                        layer.close(loader);
+                        layer.msg('修改失败！',{anim: 6});
+                    }
+                })
+            }
+            return false;
+        })
+    })
+</script>
+
+</body>
+</html>

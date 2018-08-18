@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="COMMON_RES/css/bootstrap-v2.3.2.min.css" rel="stylesheet" />
+    <link href="/Public/admin/css/blogroll_add.css" rel="stylesheet" />
+    <link rel="stylesheet" href="COMMON_RES/plugin/UEditor/third-party/webuploader/webuploader.css">
+    <link rel="stylesheet" href="COMMON_RES/plugin/layer/skin/default/layer.css">
+    <script src="COMMON_RES/js/jquery-v1.9.1.js"></script>
+    <script src="/Public/admin/js/blogroll_add.js"></script>
+    <script src="COMMON_RES/plugin/layer/layer.js"></script>
+    <script type="text/javascript" charset="utf-8" src="COMMON_RES/plugin/UEditor/third-party/webuploader/webuploader.js"></script>
+    <script>
+        $(function(){
+            $("#my_form").on("submit",function(){
+                var result=true;
+                if($("input[name=image_path]").val()==""){
+                    result=false;
+                    layer.msg("请上传图片！", { time:2000});
+                }
+                return result;
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="contain">
+    <form method="post" action="" id="my_form">
+        <input name="id" type="hidden" value="{$data.id}">
+    <div class="news_picture clearfix">
+        <span class="">图片上传：</span>
+        <!--dom结构部分-->
+        <div id="uploader">
+            <!--用来存放item-->
+            <input type="hidden" name="image_path" value="{$data.image_path}">
+            <div id="filePicker">选择图片</div>
+            <div id="fileList" class="uploader-list">
+                <neq name="data.image_path" value="">
+                    <img src="{$data.image_path}" style="width: 100%;height: 100%">
+                    <else/>
+                    <img src="/Public/admin/image/no_image.jpg" style="width: 100%;">
+                </neq>
+            </div>
+            <div class="upload_message" style="color: #D83918"><!--要求：<br><br>1、只允许上传以jpg、jpeg、png为后缀的图片<br><br>2、图片文件大小不能超过1M<br><br>3、图片建议尺寸：372 x 281--></div>
+        </div>
+    </div>
+    <div class="mk">
+        <div class="username">友链标题：</div>
+        <input style="width: 200px;height: 30px" name="title" type="text" value="{$data.title}">
+    </div>
+    <div class="mk">
+        <div class="username">友链地址：</div>
+        <input style="width: 350px;height: 30px" name="url" type="text" value="{$data.url}">
+    </div>
+    <div class="mk">
+        <div class="username">排序权重：</div>
+        <input style="width: 80px;height: 30px" name="sort" type="text" value="{$data.sort}">
+    </div>
+    <div class="mk">
+        <span style="margin-right: 30px">使用状态：</span>
+        <label style="display: inline-block;margin-right: 20px">
+            <input name="status" type="radio" value="1" <eq name="data.status" value="1">checked</eq>> 启用
+        </label>
+        <label style="display: inline-block;margin-right: 20px">
+            <input name="status" type="radio" value="0" <eq name="data.status" value="0">checked</eq>> 停用
+        </label>
+    </div>
+    <div class="mk">
+        <input class="btn btn-lg btn-primary"   type="submit" style="width: 80px;height: 40px">
+        <input class="btn  btn-lg " style="width: 58px;height: 31px;margin-left: 20px" value="返回" onclick="history.back()">
+        <span style="margin-left: 10px"><em style="color: red;font-size: 20px">* </em> 请填完全部内容再提交</span>
+    </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="COMMON_RES/css/bootstrap-v2.3.2.min.css" rel="stylesheet" />
+    <link href="/Public/admin/css/user_add.css" rel="stylesheet" />
+    <script src="COMMON_RES/js/jquery-v1.9.1.js"></script>
+    <script>
+        $(function(){
+            $("#my_form").on("submit",function(){
+                var old_pw= $.trim($("input[name=old_pw]").val());
+                var new_pw= $.trim($("input[name=new_pw]").val());
+                var con_pw= $.trim($("input[name=con_pw]").val());
+                if(old_pw=="" || new_pw=="" || con_pw==""){
+                    return false;
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="contain">
+    <form method="post" action="" id="my_form">
+    <div class="mk">
+        <div class="username">旧密码：</div>
+        <input style="width: 200px" name="old_pw" type="password">
+    </div>
+    <div class="mk">
+        <div class="username">新密码：</div>
+        <input style="width: 200px" name="new_pw" type="password">
+    </div>
+    <div class="mk">
+        <div class="username">确认密码：</div>
+        <input style="width: 200px" name="con_pw" type="password">
+    </div>
+    <div class="mk">
+        <div class="username"></div>
+        <input class="btn btn-info"  type="submit">
+        <input class="btn btn-default" style="width: 30px;margin-left: 20px" value="返回" onclick="history.back()">
+    </div>
+    </form>
+</div>
+</body>
+</html>

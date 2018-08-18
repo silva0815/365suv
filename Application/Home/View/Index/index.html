@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <neq name="type" value="0">
+        <title>越行越野-{:C("ARTICLE_TYPE")[$type]}</title>
+        <else/>
+        <title>越行越野-suv交流平台、suv汽车社区网站、suv最新资讯尽在越行越野</title>
+    </neq>
+    <meta name="description" content="这里是suv车主、suv爱好者的一个自由交流的平台,只为suv而来">
+    <link rel="stylesheet" href="HOME_RES/css/index/index.css">
+    <link rel="stylesheet" href="COMMON_RES/css/my_btn.css">
+    <link rel="stylesheet" href="COMMON_RES/css/my_fenye.css">
+    <link rel="stylesheet" href="COMMON_RES/plugin/nav/css/lanren.css">
+    <link rel="stylesheet" href="COMMON_RES/plugin/hiSlider/css/jquery.hiSlider.min.css">
+    <link rel="shortcut icon" href="COMMON_RES/img/yxyy7.png">
+    <script src="COMMON_RES/js/jquery-v1.9.1.js"></script>
+</head>
+<body id="top">
+<div class="blog">
+    <include file="Public:header" />
+    <!--主要内容-->
+    <div style="width: 100%">
+        <!--左边部分-->
+        <div style="width: 750px;float: left">
+            <div style="width:750px;height: 380px">
+                <ul class="hiSlider">
+                    <volist name="ads['slideshows']" id="v" offset="0" length='5'>
+                    <li data-title="{$v.title}" class="hiSlider-item">
+                        <a href="{$v.url}"  target="_blank">
+                            <img src="{$v.image_path}" alt="{$v.title}">
+                        </a>
+                    </li>
+                    </volist>
+                </ul>
+            </div>
+            <div id="new_publish" style="width:100%;height: 40px;margin-top:15px;border-bottom: 5px solid #0a4e8a">
+                <span style="line-height: 40px;margin-left: 10px;font-family: '微软雅黑';font-weight: bold">
+                    <if condition="$search neq ''">
+                        搜索结果
+                        <else/>
+                        <if condition="$type eq ''">
+                            最新发布
+                            <else />{:C("ARTICLE_TYPE")[$type]}
+                        </if>
+                    </if>
+
+                </span>
+            </div>
+            <foreach name="data_b" item="var">
+            <div class="content huwen" checked_id="{$var.blog_id}"><!--测试-->
+                <div class="photo">
+                    <a href="/read/{$var.blog_id}.html">
+                        <neq name="var.photo" value="">
+                        <img src="{$var.photo}" style="width: 100%;height: 100%">
+                            <else/>
+                            <img src="/Public/Blog/photo/male.png" style="width: 100%;height: 100%">
+                        </neq>
+                    </a>
+                </div>
+                <div class="title">
+                    <a class="color2" href="/read/{$var.blog_id}.html" style="font-family: 微软雅黑;">
+                        {$var.title}
+                    </a>
+                </div>
+                <div class="summary">
+                    {$var.summary}
+                </div>
+                <div class="info">
+                    发布人：<span class="color5">{$var.author}</span> |
+                    发布时间：<span class="color5">{:date('Y-m-d H:i:s',$var['publish_at'])}</span> |
+                    更新时间：<span class="color5">{:date('Y-m-d H:i:s',$var['edit_at'])}</span> |
+                    <a class="color1" href="/read/{$var.blog_id}.html">阅读次数（<span class="color5">{$var.read_count}</span>）</a> |
+                    <a class="color1" href="/read/{$var.blog_id}.html#comment_list">评论次数（<span class="color5">{$var.comment_count}</span>）</a>
+                </div>
+            </div>
+            </foreach>
+            <!--分页-->
+            <div class="pages">{$page}</div>
+
+        </div>
+
+        <!--右边部分-->
+        <div style="width: 270px;float: right">
+            <a href="{$ads['right_top'][0]['url']}">
+            <img src="{$ads['right_top'][0]['image_path']}" style="border-radius: 5px;width: 100%;height: 200px">
+            </a>
+            <div class="border2" style="margin-top: 8px;margin-bottom: 8px">
+                <div style="padding-left: 5%;margin-top: 5px;margin-bottom: 5px">
+                    <span class="font2 color2">热门新闻</span>
+                    <!--<a class="more" style="float: right;margin-right: 5px" href="http://car.bitauto.com/suv/all/" target="_blank">-->
+                    <a class="more" style="float: right;margin-right: 5px" href="/news.html">
+                        <span class="font1 color1">更多>></span>
+                    </a>
+                </div>
+                <div class="over" style="padding: 10px;line-height: 30px;">
+                    <volist name="arrNews" id="v" >
+                    <a href="{$v.url}" target="_blank">
+                        <nobr>{$v.title}</nobr>
+                    </a><br>
+                    </volist>
+                </div>
+            </div>
+            <a href="{$ads['right_middle'][0]['url']}">
+            <img src="{$ads['right_middle'][0]['image_path']}" style="border-radius: 5px;width: 100%;height: 200px">
+            </a>
+            <div class="border2" style="margin-top: 8px;margin-bottom: 8px">
+                <div style="padding-left: 5%;margin-top: 5px;margin-bottom: 5px">
+                    <span class="font2 color2">最新评论</span>
+                </div>
+                <div style="padding: 10px;line-height: 30px">
+                    <foreach name="data_c" item="var">
+
+                    <div style="width: 100%;margin-bottom:30px;height: 50px;">
+                        <div class="over"
+                             style="width: 90%;height: 30px;line-height:30px;border-bottom: 1px dashed dimgrey;margin: auto">
+                            <a href="/read/{$var.blog_id}.html" target="_blank">
+                                <nobr>{$var.ccontent}</nobr>
+                            </a>
+                        </div>
+                        <div style="font-size: 12px;color:dimgrey;width: 90%;height:20px;line-height:20px;margin: auto">
+                            <span style="color: #1006F1">{$var.reviewer}</span>
+                        </div>
+                        <div style="font-size: 12px;color:dimgrey;width: 90%;height:20px;line-height:20px;margin: auto">
+                            发表于 {:date("Y-m-d H:i:s",$var['comment_at'])}
+                        </div>
+                    </div>
+
+
+                    </foreach>
+
+                </div>
+            </div>
+            <a href="{$ads['right_bottom'][0]['url']}">
+            <img src="{$ads['right_bottom'][0]['image_path']}" style="border-radius: 5px;width: 100%;height: 200px">
+            </a>
+            <div class="border2" style="margin-top: 8px;margin-bottom: 8px">
+                <div style="padding-left: 5%;margin-top: 5px;margin-bottom: 5px">
+                    <span class="font2 color2">友情链接</span>
+                </div>
+                <div class="friend_link">
+                    <volist name="blogrolls" id="v">
+                        <div>
+                            <a href="{$v.url}" target="_blank">
+                                <img src="{$v.image_path}">
+                                <span>{$v.title}</span>
+                            </a>
+                        </div>
+                    </volist>
+                </div>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <include file="Public:footer" />
+</div>
+<div style="width: 80px;position: fixed;left: 5px;bottom:80px;z-index:100">
+    <ul style="text-align: center">
+        <li style="margin-bottom:5px">
+            <a href="#top">
+                <img src="COMMON_RES/img/dingbu.png" style="width: 50px;height: 50px">
+            </a>
+        </li>
+        <li style="margin-bottom:5px">
+            <a href="#new_publish">
+                <img src="COMMON_RES/img/wenzhangList.png" style="width: 50px;height: 50px">
+            </a>
+        </li>
+        <notempty name="user">
+        <li>
+            <a href="/publish"><img src="COMMON_RES/img/fatie.png" style="width: 50px;height: 50px"></a>
+        </li>
+        </notempty>
+    </ul>
+</div>
+<empty name="user">
+<div style="padding:10px;width: 16px;color:red;font-family:微软雅黑;font-size: 16px;border:1px solid #e9e9e9;position: fixed;right: 20px;bottom:50px;">
+    完成登陆即可发布文章
+</div>
+</empty>
+<script src="COMMON_RES/plugin/hiSlider/js/jquery.hiSlider.min.js"></script>
+<script src="HOME_RES/js/index/index.js"></script>
+</body>
+</html>

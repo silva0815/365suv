@@ -1,0 +1,36 @@
+<volist name="data" id="var" key="k">
+    <div class="commentA" id="PL_{$var.comment_id}">
+        <div class="commentB">
+            <!--<div class="commentC">评论人：</div>-->
+            <div class="commentD">
+                <img src="{$var.photo}" class="commentE">
+            </div>
+            <div class="commentF">
+                {$var.reviewer}
+            </div>
+        </div>
+        <div class="commentG">
+            <div class="commentH">
+                <span class="commentI"> {$k+($nowPage-1)*$listRows} F</span>
+                <span class="commentJ"> {:date("Y-m-d H:i:s",$var['comment_at'])}</span>
+            </div>
+            <div class="commentL">
+                {:htmlspecialchars_decode($var['ccontent'])}
+            </div>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+</volist>
+<div class="pages">{$page}</div>
+<script>
+    $('.pages a').on('click',function(){
+        var $this=$(this);
+        $.ajax({
+            url:$this.attr('href'),
+            'success':function(data){
+                $('#commentPlus').html(data);
+            }
+        });
+        return false;
+    });
+</script>
